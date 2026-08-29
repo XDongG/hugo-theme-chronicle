@@ -1,0 +1,16 @@
+{{ if hugo.IsMultilingual }}
+{{ $current := .Language.Lang }}
+<nav class="lang-switch" aria-label="{{ i18n "langAriaLabel" }}">
+  <svg class="lang-switch__icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+  <ul class="lang-switch__list">
+    {{ range .Site.Home.AllTranslations }}
+      {{ $lang := .Language }}
+      {{ $url := .RelPermalink }}
+      {{ range $.AllTranslations }}
+        {{ if eq .Language.Lang $lang.Lang }}{{ $url = .RelPermalink }}{{ end }}
+      {{ end }}
+      <li><a class="lang-switch__link" href="{{ $url }}"{{ if eq $lang.Lang $current }} aria-current="true"{{ end }}>{{ $lang.Label | default $lang.Lang }}</a></li>
+    {{ end }}
+  </ul>
+</nav>
+{{ end }}

@@ -1,0 +1,21 @@
+{{ define "main" }}
+  {{ $sections := .Site.Params.homeSections | default (slice "posts" "journal" "notes") }}
+  {{ $pages := where .Site.RegularPages "Type" "in" $sections }}
+  <section class="post-list" aria-label="{{ i18n "recentPosts" }}">
+    {{ $paginator := .Paginate $pages }}
+    {{ range $paginator.Pages }}
+      {{ partial "post-card.html" (dict "p" . "home" true) }}
+    {{ end }}
+  </section>
+
+  {{ if or ($paginator.HasPrev) ($paginator.HasNext) }}
+  <nav class="pagination" aria-label="{{ i18n "paginationAriaLabel" }}">
+    {{ if $paginator.HasPrev }}
+      <a href="{{ $paginator.Prev.URL }}" class="pagination-prev">← {{ i18n "newer" }}</a>
+    {{ end }}
+    {{ if $paginator.HasNext }}
+      <a href="{{ $paginator.Next.URL }}" class="pagination-next">{{ i18n "older" }} →</a>
+    {{ end }}
+  </nav>
+  {{ end }}
+{{ end }}

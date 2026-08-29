@@ -1,0 +1,52 @@
+{{ define "main" }}
+  {{ if or (eq .Kind "term") (eq .Kind "taxonomy") }}
+  <header class="page-header">
+    {{ if eq .Kind "taxonomy" }}
+    <h1 class="page-title">{{ i18n "tags" }}</h1>
+    {{ else }}
+    <p class="page-label">{{ i18n "tag" }}</p>
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ end }}
+  </header>
+
+    {{ if eq .Kind "taxonomy" }}
+    <ul class="tag-cloud">
+      {{ range .Data.Terms.ByCount }}
+      <li>
+        <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>
+        <span class="tag-count">({{ .Count }})</span>
+      </li>
+      {{ end }}
+    </ul>
+    {{ else }}
+    <section class="post-list" aria-label="{{ i18n "recentPosts" }}">
+      {{ range .Paginator.Pages }}
+        {{ partial "post-card.html" (dict "p" . "home" false) }}
+      {{ end }}
+    </section>
+    {{ end }}
+  {{ else }}
+  <header class="page-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Params.subtitle }}<p class="page-subtitle">{{ . }}</p>{{ end }}
+  </header>
+  {{ if .Content }}<div class="page-body">{{ .Content }}</div>{{ end }}
+
+  <section class="post-list" aria-label="{{ i18n "recentPosts" }}">
+    {{ range .Paginator.Pages }}
+      {{ partial "post-card.html" (dict "p" . "home" false) }}
+    {{ end }}
+  </section>
+
+  {{ if or (.Paginator.HasPrev) (.Paginator.HasNext) }}
+  <nav class="pagination" aria-label="{{ i18n "paginationAriaLabel" }}">
+    {{ if .Paginator.HasPrev }}
+      <a href="{{ .Paginator.Prev.URL }}" class="pagination-prev">← {{ i18n "newer" }}</a>
+    {{ end }}
+    {{ if .Paginator.HasNext }}
+      <a href="{{ .Paginator.Next.URL }}" class="pagination-next">{{ i18n "older" }} →</a>
+    {{ end }}
+  </nav>
+  {{ end }}
+  {{ end }}
+{{ end }}

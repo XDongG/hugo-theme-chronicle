@@ -1,0 +1,15 @@
+[
+  {{- range $i, $p := where .Site.RegularPages "Type" "in" (slice "posts" "journal" "notes") -}}
+  {{- if $i }},{{ end -}}
+  {
+    "title": {{ $p.Title | plainify | jsonify }},
+    "url": {{ $p.RelPermalink | jsonify }},
+    "date": {{ $p.Date.Format "2006-01-02" | jsonify }},
+    "displayDate": {{ $p.Date | time.Format (i18n "dateFormat") | jsonify }},
+    "type": {{ $p.Type | jsonify }},
+    "tags": {{ $p.Params.tags | default slice | jsonify }},
+    "summary": {{ $p.Summary | plainify | jsonify }},
+    "content": {{ $p.Plain | plainify | jsonify }}
+  }
+  {{- end -}}
+]

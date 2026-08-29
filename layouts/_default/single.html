@@ -1,0 +1,71 @@
+{{ define "main" }}
+  {{ if in (slice "posts" "journal" "notes") .Type }}
+  <article>
+    <header class="post-header">
+      {{ if eq .Type "journal" }}
+        <h1 class="post-title">{{ .Title }}</h1>
+      {{ else if eq .Type "notes" }}
+        <div class="post-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format (i18n "dateFormat") }}</time>
+        </div>
+        {{ with .Title }}<h1 class="post-title">{{ . }}</h1>{{ end }}
+      {{ else }}
+        <div class="post-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format (i18n "dateFormat") }}</time>
+          {{ with .GetTerms "tags" }}
+            {{ range . }}<a href="{{ .RelPermalink }}" class="tag">{{ .LinkTitle }}</a>{{ end }}
+          {{ end }}
+        </div>
+        <h1 class="post-title">{{ .Title }}</h1>
+      {{ end }}
+      {{ with .Params.subtitle }}<p class="post-subtitle">{{ . }}</p>{{ end }}
+      {{ with .Params.cover }}
+      <figure class="post-cover">
+        <img src="{{ . }}" alt="{{ $.Params.coverAlt | default $.Title }}">
+        {{ with $.Params.coverCaption }}<figcaption>{{ . }}</figcaption>{{ end }}
+      </figure>
+      {{ end }}
+    </header>
+    <div class="post-body-wrap">
+      <div class="post-body">
+        {{ .Content }}
+      </div>
+    </div>
+
+    {{ if .Site.Params.showPostNav }}
+    {{ if or .NextInSection .PrevInSection }}
+    <footer class="post-footer">
+      <nav class="post-nav" aria-label="{{ i18n "postNavAriaLabel" }}">
+        {{ with .PrevInSection }}
+        <a href="{{ .RelPermalink }}">
+          <span class="post-nav__label">← {{ i18n "previous" }}</span>
+          <span class="post-nav__title">{{ .Title }}</span>
+        </a>
+        {{ end }}
+        {{ with .NextInSection }}
+        <a href="{{ .RelPermalink }}">
+          <span class="post-nav__label">{{ i18n "next" }} →</span>
+          <span class="post-nav__title">{{ .Title }}</span>
+        </a>
+        {{ end }}
+      </nav>
+    </footer>
+    {{ end }}
+    {{ end }}
+
+    {{ if and (not .Params.hideReply) .Site.Params.email }}
+    <footer class="reply-footer">
+      <a class="reply-email" href="mailto:{{ .Site.Params.email }}?subject=Re%3A%20{{ .Title | urlquery }}">✍️ {{ i18n "replyByEmail" }}</a>
+    </footer>
+    {{ end }}
+  </article>
+  {{ else }}
+  <header class="page-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Params.subtitle }}<p class="page-subtitle">{{ . }}</p>{{ end }}
+  </header>
+  <div class="page-body">
+    {{ .Content }}
+  </div>
+  {{ end }}
+{{ end }}

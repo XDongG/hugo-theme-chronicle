@@ -1,0 +1,56 @@
+{{- /* post-card partial — dict interface: { p: page, home: bool }
+       - notes   → compact note card (date permalink on top, no title)
+       - journal → title + optional cover + full content (meta above title on section pages)
+       - posts   → title + meta + summary (Read more) or full (Permalink #) */ -}}
+{{- $page := .p -}}
+{{- $isHome := .home -}}
+{{ $isNote := eq $page.Type "notes" }}
+{{ $isJournal := eq $page.Type "journal" }}
+<article class="post-card{{ if $isNote }} post-card--note{{ end }}">
+  {{ if $isNote }}
+    <div class="post-meta">
+      <time datetime="{{ $page.Date.Format "2006-01-02" }}">
+        <a href="{{ $page.RelPermalink }}">{{ $page.Date | time.Format (i18n "dateFormat") }} #</a>
+      </time>
+    </div>
+    <div class="post-body-wrap">
+      <div class="post-body">{{ $page.Content }}</div>
+    </div>
+  {{ else }}
+    {{ if and $isJournal (not $isHome) }}
+    <div class="post-meta">
+      <time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date | time.Format (i18n "dateFormat") }}</time>
+    </div>
+    {{ end }}
+    <h2 class="post-title">
+      <a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
+    </h2>
+    {{ if not $isJournal }}
+    <div class="post-meta">
+      <time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date | time.Format (i18n "dateFormat") }}</time>
+      {{ with $page.GetTerms "tags" }}
+        {{ range . }}<a href="{{ .RelPermalink }}" class="tag">{{ .LinkTitle }}</a>{{ end }}
+      {{ end }}
+    </div>
+    {{ end }}
+    {{ with $page.Params.cover }}
+    <figure class="post-cover">
+      <img src="{{ . }}" alt="{{ $page.Params.coverAlt | default $page.Title }}">
+      {{ with $page.Params.coverCaption }}<figcaption>{{ . }}</figcaption>{{ end }}
+    </figure>
+    {{ end }}
+    {{ if $isJournal }}
+      <div class="post-body">{{ $page.Content }}</div>
+    {{ else }}
+      <div class="post-body-wrap">
+        {{ if $page.Truncated }}
+        <div class="post-body">{{ $page.Summary }}</div>
+        <a href="{{ $page.RelPermalink }}" class="read-more">{{ i18n "readMore" }} →</a>
+        {{ else }}
+        <div class="post-body">{{ $page.Content }}</div>
+        <a href="{{ $page.RelPermalink }}" class="post-permalink">{{ i18n "permalink" }} #</a>
+        {{ end }}
+      </div>
+    {{ end }}
+  {{ end }}
+</article>

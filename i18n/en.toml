@@ -1,0 +1,29 @@
+dateFormat = "January 2, 2006"
+
+navAriaLabel = "Site navigation"
+langAriaLabel = "Language"
+socialAriaLabel = "Social links"
+recentPosts = "Recent posts"
+paginationAriaLabel = "Page navigation"
+postNavAriaLabel = "Post navigation"
+
+readMore = "Read more"
+permalink = "Permalink"
+newer = "Newer"
+older = "Older"
+previous = "Previous"
+next = "Next"
+replyByEmail = "Reply by email"
+
+search = "Search"
+searchPlaceholder = "Type to search…"
+resultsFound = "%d results"
+noResults = "nothing found"
+
+tags = "Tags"
+tag = "Tag"
+about = "About"
+email = "Email"
+
+notFound = "The page you are looking for was not found."
+backHome = "Back to home"

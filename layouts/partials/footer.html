@@ -1,0 +1,27 @@
+<footer class="site-footer">
+  <div class="container container--wide">
+    <p class="footer-copy">© {{ now.Format "2006" }} {{ .Site.Params.author | default .Site.Title }}</p>
+    <nav class="footer-social" aria-label="{{ i18n "socialAriaLabel" }}">
+      {{ with .Site.Params.email }}
+      <a href="mailto:{{ . }}" title="{{ i18n "email" }}" aria-label="{{ i18n "email" }}">
+        {{ partial "icon.html" (dict "name" "email") }}
+      </a>
+      {{ end }}
+      {{ range .Site.Params.social }}
+      <a href="{{ .url }}" title="{{ .name }}" aria-label="{{ .name }}"{{ if eq .name "mastodon" }} rel="me"{{ end }}>
+        {{ partial "icon.html" (dict "name" .name) }}
+      </a>
+      {{ end }}
+      <a href="{{ "index.xml" | relLangURL }}" title="RSS" aria-label="RSS">
+        {{ partial "icon.html" (dict "name" "rss") }}
+      </a>
+    </nav>
+    <p class="footer-links">
+      {{- $links := slice -}}
+      {{ with .Site.GetPage "/about" }}{{ $links = $links | append (printf `<a href="%s">%s</a>` .RelPermalink (i18n "about")) }}{{ end }}
+      {{ $links = $links | append (printf `<a href="%s">RSS</a>` ("index.xml" | relLangURL)) }}
+      {{ with .Site.GetPage "/search" }}{{ $links = $links | append (printf `<a href="%s">%s</a>` .RelPermalink (i18n "search")) }}{{ end }}
+      {{ delimit $links " · " | safeHTML }}
+    </p>
+  </div>
+</footer>

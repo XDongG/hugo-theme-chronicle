@@ -1,0 +1,21 @@
+# Theme defaults — overridden by the site's own config.
+
+[pagination]
+  ppp = 20
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+# URL structure mirroring baty.net
+[permalinks]
+  posts = "/posts/:year/:month/:slug/"
+  notes = "/notes/:year/:month/:slug/"
+  journal = "/journal/:slug/"
+
+[markup.goldmark.renderer]
+  # Allow raw HTML (e.g. embedded iframes) in content, like baty.net.
+  unsafe = true
+
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 4

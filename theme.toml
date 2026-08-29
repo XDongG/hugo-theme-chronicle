@@ -1,0 +1,13 @@
+name = "Chronicle"
+license = "MIT"
+licenselink = "https://github.com/XDongG/hugo-theme-chronicle/blob/main/LICENSE"
+description = "A minimalist blog theme inspired by baty.net — serif titles, mixed post/journal/note feed, light & dark mode, and multilingual support."
+homepage = "https://github.com/XDongG/hugo-theme-chronicle"
+demosite = "https://github.com/XDongG/hugo-theme-chronicle"
+tags = ["blog", "minimal", "clean", "responsive", "dark", "light", "multilingual", "i18n"]
+features = ["blog", "journal", "notes", "search", "tags", "rss", "dark mode", "i18n"]
+min_version = "0.120.0"
+
+[author]
+  name = "XDongG"
+  homepage = "https://github.com/XDongG"

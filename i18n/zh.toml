@@ -1,0 +1,29 @@
+dateFormat = "2006年1月2日"
+
+navAriaLabel = "站点导航"
+langAriaLabel = "语言"
+socialAriaLabel = "社交链接"
+recentPosts = "最新文章"
+paginationAriaLabel = "分页导航"
+postNavAriaLabel = "文章导航"
+
+readMore = "阅读全文"
+permalink = "固定链接"
+newer = "较新"
+older = "较早"
+previous = "上一篇"
+next = "下一篇"
+replyByEmail = "通过邮件回复"
+
+search = "搜索"
+searchPlaceholder = "输入关键词搜索…"
+resultsFound = "找到 %d 条结果"
+noResults = "没有找到相关内容"
+
+tags = "标签"
+tag = "标签"
+about = "关于"
+email = "邮件"
+
+notFound = "你访问的页面不存在。"
+backHome = "返回首页"

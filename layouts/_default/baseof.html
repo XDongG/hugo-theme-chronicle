@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Locale | default .Site.Language.Lang }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+
+  {{ with .Site.Params.favicon |default .Site.Params.avatar }}
+  <link rel="icon" href="{{ . | relURL }}" />
+  {{ end }}
+
+  <meta name="author" content="{{ .Site.Params.author | default .Site.Title }}">
+  {{ with .Site.Params.fediverse }}<meta name="fediverse:creator" content="{{ . }}">{{ end }}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Instrument+Sans:ital,wght@0,400;0,600;1,400&family=Vollkorn:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  {{ $css := resources.Get "css/styles.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+
+  {{ with .OutputFormats.Get "rss" }}
+  <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Site.Title }}">
+  {{ end }}
+
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+  <meta property="og:title" content="{{ .Title }}">
+  <meta property="og:description" content="{{ .Description | default .Site.Params.description }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:type" content="{{ if eq .Kind "page" }}article{{ else }}website{{ end }}">
+  {{ with .Site.Params.ogImage }}
+  <meta property="og:image" content="{{ . | absURL }}">
+  {{ end }}
+  <meta name="twitter:card" content="summary">
+
+  {{ with .Site.Params.analytics }}<script defer src="{{ . }}"{{ with $.Site.Params.analyticsId }} data-website-id="{{ . }}"{{ end }}></script>{{ end }}
+
+  {{ partial "head-custom.html" . }}
+</head>
+<body{{ if .IsHome }} class="home"{{ end }}>
+
+  {{ partial "lang-switch.html" . }}
+
+  {{ partial "header.html" . }}
+
+  <main>
+    <div class="container">
+      {{ block "main" . }}{{ end }}
+    </div>
+  </main>
+
+  {{ partial "footer.html" . }}
+
+  {{ $js := resources.Get "js/main.js" | minify | fingerprint }}
+  <script defer src="{{ $js.RelPermalink }}"></script>
+  {{ partial "scripts-custom.html" . }}
+</body>
+</html>

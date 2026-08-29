@@ -1,0 +1,11 @@
+{{ define "main" }}
+  <header class="page-header">
+    <h1 class="page-title">{{ i18n "search" }}</h1>
+  </header>
+  <input type="search" id="search-input" class="search-input" placeholder="{{ i18n "searchPlaceholder" }}" autocomplete="off">
+  <p class="search-info" id="search-info"></p>
+  <section class="search-results post-list" id="search-results" aria-live="polite"></section>
+  {{ $js := resources.Get "js/search.js" | minify | fingerprint }}
+  {{ $strings := dict "resultsFound" (i18n "resultsFound") "noResults" (i18n "noResults") }}
+  <script src="{{ $js.RelPermalink }}" data-index-url="{{ "index.json" | relLangURL }}" data-strings='{{ $strings | jsonify }}'></script>
+{{ end }}
