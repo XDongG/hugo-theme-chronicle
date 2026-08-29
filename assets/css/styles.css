@@ -39,22 +39,10 @@
   --color-accent:      oklch(0.52 0.12 65);
   --color-accent-soft: oklch(0.96 0.03 70);
   --color-code-bg:     #f3f4f6;
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg:          #141412;
-    --color-surface:     #1e1e1c;
-    --color-border:      #2e2e2b;
-    --color-text:        #e8e8e4;
-    --color-text-muted:  #888884;
-    --color-accent:      oklch(0.75 0.13 70);
-    --color-accent-soft: oklch(0.22 0.04 65);
-    --color-code-bg:     #252523;
-  }
-}
-
-/* Manual theme override (html[data-theme]) */
+/* 默认亮色；深色仅在 html[data-theme="dark"] 时启用 */
 html[data-theme="dark"] {
   --color-bg:          #141412;
   --color-surface:     #1e1e1c;
