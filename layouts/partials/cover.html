@@ -1,0 +1,29 @@
+{{- /* cover partial — 渲染封面图，兼容两种 front matter 写法：
+       cover: "/img/x.webp"（字符串）
+       cover: { image: "...", alt: "...", caption: "..." }（映射）
+       非 URL 时优先匹配页面资源（page bundle）。 */ -}}
+{{- $page := . -}}
+{{- $cover := $page.Params.cover -}}
+{{- $src := "" -}}
+{{- $alt := $page.Params.coverAlt | default $page.Title -}}
+{{- $caption := $page.Params.coverCaption -}}
+{{- if $cover -}}
+  {{- if reflect.IsMap $cover -}}
+    {{- $src = $cover.image -}}
+    {{- with $cover.alt }}{{ $alt = . }}{{ end }}
+    {{- with $cover.caption }}{{ $caption = . }}{{ end }}
+  {{- else if reflect.IsSlice $cover -}}
+    {{- $src = index $cover 0 -}}
+  {{- else -}}
+    {{- $src = $cover -}}
+  {{- end -}}
+{{- end -}}
+{{- if $src -}}
+  {{- if not (or (hasPrefix $src "http://") (hasPrefix $src "https://") (hasPrefix $src "/")) -}}
+    {{- with $page.Resources.GetMatch $src }}{{ $src = .RelPermalink }}{{ end }}
+  {{- end -}}
+  <figure class="post-cover">
+    <img src="{{ $src }}" alt="{{ $alt }}">
+    {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+  </figure>
+{{- end -}}

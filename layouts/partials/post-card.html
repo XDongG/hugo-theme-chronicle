@@ -33,12 +33,7 @@
       {{ end }}
     </div>
     {{ end }}
-    {{ with $page.Params.cover }}
-    <figure class="post-cover">
-      <img src="{{ . }}" alt="{{ $page.Params.coverAlt | default $page.Title }}">
-      {{ with $page.Params.coverCaption }}<figcaption>{{ . }}</figcaption>{{ end }}
-    </figure>
-    {{ end }}
+    {{ partial "cover.html" $page }}
     {{ if $isJournal }}
       <div class="post-body">{{ $page.Content }}</div>
     {{ else }}
