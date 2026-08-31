@@ -21,6 +21,8 @@
       {{ with .Site.GetPage "/about" }}{{ $links = $links | append (printf `<a href="%s">%s</a>` .RelPermalink (i18n "about")) }}{{ end }}
       {{ $links = $links | append (printf `<a href="%s">RSS</a>` ("index.xml" | relLangURL)) }}
       {{ with .Site.GetPage "/search" }}{{ $links = $links | append (printf `<a href="%s">%s</a>` .RelPermalink (i18n "search")) }}{{ end }}
+      {{ $themeURL := .Site.Params.themeURL | default "https://github.com/XDongG/hugo-theme-chronicle" }}
+      {{ $links = $links | append (printf `<a href="%s" title="%s">%s</a>` $themeURL (i18n "theme") (i18n "theme")) }}
       {{ delimit $links " · " | safeHTML }}
     </p>
   </div>

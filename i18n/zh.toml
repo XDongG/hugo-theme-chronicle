@@ -24,6 +24,7 @@ tags = "标签"
 tag = "标签"
 about = "关于"
 email = "邮件"
+theme = "主题"
 
 notFound = "你访问的页面不存在。"
 backHome = "返回首页"
