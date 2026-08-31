@@ -92,6 +92,8 @@ body {
   min-height: 100dvh;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  /* minmax(0,1fr)：列宽以视口为准，防止宽图片/代码块/表格的 min-content 撑爆整页 */
+  grid-template-columns: minmax(0, 1fr);
 }
 
 /* ─── Layout ─────────────────────────────────────────────────────── */
@@ -238,6 +240,7 @@ body {
 /* ─── Main ───────────────────────────────────────────────────────── */
 main {
   padding-block: var(--space-2xl);
+  min-width: 0; /* 允许在 grid/flex 中收缩，防止宽内容撑破视口 */
 }
 body.home main {
   padding-block-start: var(--space-2xl);
