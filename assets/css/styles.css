@@ -68,6 +68,7 @@ html[data-theme="light"] {
 /* ─── Reset ──────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 img { max-width: 100%; height: auto; }
+iframe, video, embed, object { max-width: 100%; }
 figcaption {
   font-family: var(--font-sans);
   font-size: var(--font-size-sm);
@@ -312,6 +313,7 @@ body.home main {
 .post-body,
 .page-body {
   --body-flow: var(--space-md);
+  overflow-wrap: break-word;
 }
 
 .post-body > * + *,
@@ -419,6 +421,15 @@ body.home main {
   background: none;
   padding: 0;
   font-size: var(--font-size-sm);
+}
+
+/* 宽表格在容器内横向滚动，而不是撑破视口（对 display:table 直接设 overflow 无效） */
+.post-body table,
+.page-body table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .post-body figure,
@@ -1076,7 +1087,7 @@ dialog.lightbox img {
   }
 
   body { overflow-x: hidden; }
-  pre, table { overflow-x: auto; }
+  pre { overflow-x: auto; }
 
   .container     { padding-inline: var(--space-md); }
   main           { padding-block: var(--space-xl); }
