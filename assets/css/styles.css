@@ -426,6 +426,7 @@ body.home main {
   font-size: var(--font-size-sm);
 }
 
+/* ─── Tables ───────────────────────────────────────────────────── */
 /* 宽表格在容器内横向滚动，而不是撑破视口（对 display:table 直接设 overflow 无效） */
 .post-body table,
 .page-body table {
@@ -433,6 +434,38 @@ body.home main {
   width: max-content;
   max-width: 100%;
   overflow-x: auto;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm); /* 表格字号小于正文 */
+  line-height: 1.55;
+  background: var(--color-surface);
+}
+
+.post-body th,
+.post-body td,
+.page-body th,
+.page-body td {
+  border: 1px solid var(--color-border);
+  padding: 0.45rem 0.8rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.post-body thead th,
+.page-body thead th {
+  background: var(--color-accent-soft);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.post-body tbody tr:nth-child(even),
+.page-body tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--color-code-bg) 60%, transparent);
+}
+
+.post-body tbody tr:hover,
+.page-body tbody tr:hover {
+  background: var(--color-accent-soft);
 }
 
 .post-body figure,
